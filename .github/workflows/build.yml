@@ -12,3 +12,7 @@ jobs:
         working-directory: ./autobuild
     steps:
       - uses: actions/checkout@v3
+      - name: Install 7zip
+        uses: crazy-max/ghaction-chocolatey@v1
+        with:
+          args: install 7zip.install
