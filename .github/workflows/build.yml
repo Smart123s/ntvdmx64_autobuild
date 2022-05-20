@@ -1,0 +1,14 @@
+name: build
+on:
+  push:
+    branches:
+      - main
+      - autobuild
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./autobuild
+    steps:
+      - uses: actions/checkout@v3
