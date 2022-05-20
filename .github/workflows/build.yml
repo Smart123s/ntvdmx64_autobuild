@@ -16,3 +16,6 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install 7zip.install
+      - name: "Download old-src.trunk.r687.20150728.7z"
+        shell: powershell
+        run: "Invoke-WebRequest -Uri https://bits.sigpipe.me/mirrors/file.opennt.net/release/obsolete/sr687/old-src-sr687.7z -OutFile old-src-sr687.7z"
