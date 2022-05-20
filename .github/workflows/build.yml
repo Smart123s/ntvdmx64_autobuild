@@ -61,6 +61,8 @@ jobs:
       - name: "Build NTVDMx64"
         shell: cmd
         run: autobuild-ccpu-fre.cmd
+        env:
+          SRCDIR: "..\\ntvdmpatch"
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v3
         with:
