@@ -36,7 +36,7 @@ jobs:
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
         shell: powershell
-        run: "Invoke-WebRequest -Uri https://web.archive.org/web/20191230001029/http://file.opennt.net/release/snapshot/MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip -OutFile MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
+        run: "Invoke-WebRequest -Uri https://web.archive.org/web/20191230001029if_/http://file.opennt.net/release/snapshot/MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip -OutFile MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso"
         shell: powershell
@@ -52,7 +52,7 @@ jobs:
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download NTOSBE-master.zip"
         shell: powershell
-        run: "Invoke-WebRequest -Uri http://web.archive.org/web/20210804144408/https://codeload.github.com/stephanosio/NTOSBE/zip/master -OutFile NTOSBE-master.zip"
+        run: "Invoke-WebRequest -Uri http://web.archive.org/web/20210804144408if_/https://codeload.github.com/stephanosio/NTOSBE/zip/master -OutFile NTOSBE-master.zip"
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: Cache build dependencies
         uses: actions/cache@v3
