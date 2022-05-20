@@ -16,24 +16,48 @@ jobs:
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install 7zip.install
-      - name: "Download old-src.trunk.r687.20150728.7z"
+      - name: Cache build dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-deps
+        with:
+          path: ./autobuild
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download old-src.trunk.r687.20150728.7z"
         shell: powershell
         run: "Invoke-WebRequest -Uri https://bits.sigpipe.me/mirrors/file.opennt.net/release/obsolete/sr687/old-src-sr687.7z -OutFile old-src-sr687.7z"
-      - name: "Download MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
         shell: powershell
         run: "Invoke-WebRequest -Uri https://web.archive.org/web/20191230001029/http://file.opennt.net/release/snapshot/MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip -OutFile MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip"
-      - name: "Download de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso"
         shell: powershell
         run: "Invoke-WebRequest -Uri https://download-market.ru/Windows%207%20Professional/German/x86/de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso -OutFile de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso"
-      - name: "Download GRMWDK_EN_7600_1.ISO"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download GRMWDK_EN_7600_1.ISO"
         shell: powershell
         run: "Invoke-WebRequest -Uri https://download.microsoft.com/download/4/A/2/4A25C7D5-EFBE-4182-B6A9-AE6850409A78/GRMWDK_EN_7600_1.ISO -OutFile GRMWDK_EN_7600_1.ISO"
-      - name: "Download GRMSDK_EN_DVD.iso"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download GRMSDK_EN_DVD.iso"
         shell: powershell
         run: "Invoke-WebRequest -Uri https://download.microsoft.com/download/F/1/0/F10113F5-B750-4969-A255-274341AC6BCE/GRMSDK_EN_DVD.iso -OutFile GRMSDK_EN_DVD.iso"
-      - name: "Download NTOSBE-master.zip"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: "Download NTOSBE-master.zip"
         shell: powershell
         run: "Invoke-WebRequest -Uri http://web.archive.org/web/20210804144408/https://codeload.github.com/stephanosio/NTOSBE/zip/master -OutFile NTOSBE-master.zip"
+      - if: ${{ steps.cache-deps.cache-hit == false }}
+        name: Cache build dependencies
+        uses: actions/cache@v3
+        with:
+          path: ./autobuild
       - name: "Build NTVDMx64"
         shell: cmd
         run: autobuild-ccpu-fre.cmd
