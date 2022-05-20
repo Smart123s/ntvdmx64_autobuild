@@ -34,3 +34,11 @@ jobs:
       - name: "Download NTOSBE-master.zip"
         shell: powershell
         run: "Invoke-WebRequest -Uri http://web.archive.org/web/20210804144408/https://codeload.github.com/stephanosio/NTOSBE/zip/master -OutFile NTOSBE-master.zip"
+      - name: "Build NTVDMx64"
+        shell: cmd
+        run: autobuild-ccpu-fre.cmd
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-ccpu
+          path: releases/
