@@ -24,10 +24,7 @@ jobs:
         with:
           path: ./autobuild
           key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download old-src.trunk.r687.20150728.7z"
@@ -56,8 +53,11 @@ jobs:
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: Cache build dependencies
         uses: actions/cache@v3
+        env:
+          cache-name: cache-deps
         with:
           path: ./autobuild
+          key: ${{ runner.os }}-build-${{ env.cache-name }}
       - name: "Build NTVDMx64"
         shell: cmd
         run: autobuild-ccpu-fre.cmd
