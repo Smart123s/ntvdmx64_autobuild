@@ -9,22 +9,17 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./autobuild
+        working-directory: "C:\\NTVDMBLD"
     steps:
-      - uses: actions/checkout@v3
+      - name: "Create Directories"
+        working-directory: "C:\\"
+        run: mkdir 'C:\REPO', 'C:\NTVDMBLD'
+      - name: "Checkout Repository"
+        run: "git clone https://github.com/$env:GITHUB_REPOSITORY C:\\REPO"
       - name: Install 7zip
         uses: crazy-max/ghaction-chocolatey@v1
         with:
           args: install 7zip.install
-      - name: Cache build dependencies
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-deps
-        with:
-          path: ./autobuild
-          key: ${{ runner.os }}-build-${{ env.cache-name }}
-          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}
 
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download old-src.trunk.r687.20150728.7z"
@@ -56,15 +51,18 @@ jobs:
         env:
           cache-name: cache-deps
         with:
-          path: ./autobuild
+          path: "C:\\NTVDMBLD"
           key: ${{ runner.os }}-build-${{ env.cache-name }}
+          restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}
+      - name: "Move build scripts to working directory"
+        run: "mv C:\\REPO\\autobuild\\* ."
       - name: "Build NTVDMx64"
         shell: cmd
         run: autobuild-ccpu-fre.cmd
         env:
-          SRCDIR: "..\\ntvdmpatch"
+          SRCDIR: "C:\\REPO\\ntvdmpatch"
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v3
         with:
           name: release-ccpu
-          path: releases/
+          path: "C:\\NTVDMBLD\\releases\\"
