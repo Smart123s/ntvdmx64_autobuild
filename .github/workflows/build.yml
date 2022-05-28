@@ -69,6 +69,11 @@ jobs:
         run: autobuild-${{ matrix.cpu }}-fre.cmd
         env:
           SRCDIR: "C:\\REPO\\ntvdmpatch"
+      - name: Rename folders to contain cpu version
+        # https://superuser.com/a/1207117/1205900
+        shell: powershell
+        working-directory: "C:\\NTVDMBLD\\releases\\"
+        run: ls | Rename-Item -NewName { "${{ matrix.cpu }}_" + $_.Name }
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v3
         with:
