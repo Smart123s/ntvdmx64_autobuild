@@ -30,12 +30,12 @@ jobs:
         id: cache-deps
         with:
           path: |
-            old-src-sr687.7z
-            MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip
-            de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso
-            GRMWDK_EN_7600_1.ISO
-            GRMSDK_EN_DVD.iso
-            NTOSBE-master.zip
+            C:\NTVDMBLD\old-src-sr687.7z
+            C:\NTVDMBLD\MinNT-20170416-85fac4faadc77203db8ddc66af280a75c1b717b0.zip
+            C:\NTVDMBLD\de_windows_7_professional_with_sp1_x86_dvd_u_677093.iso
+            C:\NTVDMBLD\GRMWDK_EN_7600_1.ISO
+            C:\NTVDMBLD\GRMSDK_EN_DVD.iso
+            C:\NTVDMBLD\NTOSBE-master.zip
           key: "dependencies"
       - if: ${{ steps.cache-deps.cache-hit == false }}
         name: "Download old-src.trunk.r687.20150728.7z"
