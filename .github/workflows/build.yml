@@ -5,7 +5,11 @@ on:
       - main
       - autobuild
 jobs:
-  prepare:
+  build:
+    strategy:
+      matrix:
+        cpu: [ccpu, haxm]
+    name: build_${{ matrix.cpu }}
     runs-on: windows-latest
     defaults:
       run:
@@ -59,14 +63,6 @@ jobs:
         run: "Invoke-WebRequest -Uri http://web.archive.org/web/20210804144408if_/https://codeload.github.com/stephanosio/NTOSBE/zip/master -OutFile NTOSBE-master.zip"
       - name: "Move build scripts to working directory"
         run: "mv C:\\REPO\\autobuild\\* ."
-  build:
-    strategy:
-      matrix:
-        cpu: [ccpu, haxm]
-    name: build_${{ matrix.cpu }}
-    runs-on: windows-latest
-    needs: prepare
-    steps:
       - name: "Build NTVDMx64"
         shell: cmd
         run: autobuild-${{ matrix.cpu }}-fre.cmd
