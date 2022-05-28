@@ -76,5 +76,23 @@ jobs:
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v3
         with:
-          name: release-${{ matrix.cpu }}
+          name: NTVDMx64-${{ matrix.cpu }}_all
           path: "C:\\NTVDMBLD\\releases\\"
+  release_langs:
+    needs: build
+    strategy:
+      matrix:
+        cpu: [ccpu, haxm]
+        lang: [br, CHS, CHT, cs, es, fr, GER, hu, it, JPN, KOR, nl, pl, pt, ru, sv, usa]
+    name: lang_${{ matrix.lang }}_${{ matrix.cpu }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all languages
+        uses: actions/download-artifact@v3
+        with:
+          name: NTVDMx64-${{ matrix.cpu }}_all
+      - name: "Upload single-language artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: NTVDMx64-${{ matrix.cpu }}_${{ matrix.lang }}
+          path: ${{ matrix.cpu }}_${{ matrix.lang }}
